@@ -10,14 +10,19 @@ a move in UCI notation.
 
 ## How it plays
 
-- Negamax search with alpha-beta pruning and iterative deepening to a fixed
-  node budget of 40,000, so the same position always gets the same move
-- No quiescence search, transposition table, killer moves, or history
-  heuristic (left out to fit the 4 KB limit); move ordering is MVV-LVA only
-- Evaluation from material values plus a small formula-based positional
-  bonus (pawn advance and centralisation), with a bonus for the bishop pair
-- En passant is not implemented (also a size trade-off); all other legal
-  moves are supported
+- 0x88 board with full rules: castling, en passant, promotion, check,
+  checkmate, stalemate and threefold repetition
+- Negamax search with alpha-beta pruning, principal variation search and
+  iterative deepening, bounded by a node budget of 120,000 and a per-move
+  time cap, so a move is always returned well inside the match time limit
+- Quiescence search, a Zobrist-keyed transposition table, killer moves and
+  a history heuristic for move ordering, plus null-move pruning and late
+  move reductions
+- Evaluation from material values plus piece-square tables, with a bonus
+  for the bishop pair
+- `main.py` is the engine packed with the kit's LZMA compressor to fit
+  the 4,096-byte limit; it unpacks itself at startup and runs as plain
+  Python from there
 
 ## Running it
 
